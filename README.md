@@ -3,7 +3,7 @@
 
 This project converts structured JSON data into a set of normalized CSV files using a compiler-based approach. It utilizes **Flex** and **Bison** to parse JSON, analyzes its hierarchical structure via an **Abstract Syntax Tree (AST)**, and outputs relational-style CSV files. The tool supports complex nested structures and maintains proper **foreign key relationships** between tables.
 
----
+
 
 ##  Key Features
 
@@ -17,7 +17,7 @@ This project converts structured JSON data into a set of normalized CSV files us
   * **R5**: Every row gets a unique ID with proper foreign key links
   * **R6**: Each table is written as an individual CSV file
 
----
+
 
 ##  Build Instructions
 
@@ -29,24 +29,22 @@ Ensure the following are installed on your system:
 
 Then, compile the project using:
 
-```bash
 make
-```
 
----
+
+
 
 ## Run Instructions
 
 1. Create or place your JSON input in a file (e.g., `input.json`)
 2. Run the tool:
 
-```bash
 ./json2relcsv < input.json
-```
+
 
 3. Output CSV files will be generated in the `output/` directory.
 
----
+
 
 ##  Design Overview
 
@@ -79,7 +77,6 @@ make
 * Maintains unique row IDs and generates foreign key fields.
 * Writes structured data into separate CSV files.
 
----
 
 ##  Output
 
@@ -87,7 +84,6 @@ make
 * Includes column headers and consistent row formatting.
 * Table names are inferred from object keys or parent relations.
 
----
 
 ##  Authors
 
