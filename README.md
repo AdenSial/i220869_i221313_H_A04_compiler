@@ -1,75 +1,96 @@
 
+# JSON to Relational CSV Converter
 
+This project converts structured JSON data into a set of normalized CSV files using a compiler-based approach. It utilizes **Flex** and **Bison** to parse JSON, analyzes its hierarchical structure via an **Abstract Syntax Tree (AST)**, and outputs relational-style CSV files. The tool supports complex nested structures and maintains proper **foreign key relationships** between tables.
 
-##  Requirements
+---
 
-Ensure you have:
+##  Key Features
 
-* **GCC**
-* **Flex**
-* **Bison**
+*  **Full JSON Support**: Handles JSON strings, numbers, booleans, nulls, objects, and arrays
+*  **Relational Mapping (R1–R6)**:
 
-To install on Debian/Ubuntu:
-
-```bash
-sudo apt update
-sudo apt install build-essential flex bison
-```
+  * **R1**: Converts JSON objects into flat rows
+  * **R2**: Extracts arrays of objects into child tables
+  * **R3**: Maps arrays of scalar values into junction tables
+  * **R4**: Scalar values become columns in tables
+  * **R5**: Every row gets a unique ID with proper foreign key links
+  * **R6**: Each table is written as an individual CSV file
 
 ---
 
 ##  Build Instructions
 
-Run the following command in the project directory (where `Makefile` is):
+Ensure the following are installed on your system:
+
+* GCC (GNU Compiler Collection)
+* Flex (Lexical analyzer generator)
+* Bison (Parser generator)
+
+Then, compile the project using:
 
 ```bash
 make
 ```
 
-This will:
+---
 
-* Generate `lex.yy.c` and `parser.tab.c/h`
-* Compile all `.c` files
-* Produce an executable (likely named `json2relcsv` or `main`)
+## Run Instructions
+
+1. Create or place your JSON input in a file (e.g., `input.json`)
+2. Run the tool:
+
+```bash
+./json2relcsv < input.json
+```
+
+3. Output CSV files will be generated in the `output/` directory.
 
 ---
 
-##  Run Instructions
+##  Design Overview
 
-Assuming your output executable is `main`, run:
+###  Lexical Analysis (`scanner.l`)
 
-```bash
-./main test.json
-```
+* Tokenizes JSON using Flex.
+* Recognizes punctuation, keywords (`true`, `false`, `null`), strings, numbers, and ignores whitespace.
 
-Or if your executable is named `json2relcsv`:
+###  Parsing & AST Construction (`parser.y`)
 
-```bash
-./json2relcsv test.json
-```
+* Parses JSON and builds an **Abstract Syntax Tree (AST)**.
+* Supports nested structures: objects, arrays, pairs, values.
 
-If the program supports printing the AST (check `main.c`), you can use:
+###  AST Structure (`ast.h` / `ast.c`)
 
-```bash
-./main --print-ast test.json
-```
+* Core data structure used for analysis.
+* Nodes can be:
 
-Output CSV files will be generated in the current directory.
+  * Object
+  * Array
+  * String
+  * Number
+  * Boolean
+  * Null
+
+###  Semantic Analysis & CSV Generation (`csv_converter.c`)
+
+* Walks the AST to extract relational schemas.
+* Identifies repeated object structures (as tables).
+* Maintains unique row IDs and generates foreign key fields.
+* Writes structured data into separate CSV files.
 
 ---
 
-## Test Input
+##  Output
 
-Use any JSON file like:
-
-```bash
-./main test/sample1.json
-```
+* Each inferred table is saved as a `.csv` file in the `output/` directory.
+* Includes column headers and consistent row formatting.
+* Table names are inferred from object keys or parent relations.
 
 ---
 
-## Troubleshooting
+##  Authors
 
-* **Command not found**: Ensure `make` and `./main` are run from the correct directory.
-* **Flex or Bison errors**: Confirm installation with `flex --version` and `bison --version`.
-* **Segfaults**: Check your JSON format or memory handling in `main.c`.
+* **22i-0869**
+* **22i-1313**
+
