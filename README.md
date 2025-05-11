@@ -1,7 +1,7 @@
 
 
 
-## ✅ Requirements
+##  Requirements
 
 Ensure you have:
 
@@ -18,7 +18,7 @@ sudo apt install build-essential flex bison
 
 ---
 
-## 🔨 Build Instructions
+##  Build Instructions
 
 Run the following command in the project directory (where `Makefile` is):
 
@@ -34,7 +34,7 @@ This will:
 
 ---
 
-## 🚀 Run Instructions
+##  Run Instructions
 
 Assuming your output executable is `main`, run:
 
@@ -58,7 +58,7 @@ Output CSV files will be generated in the current directory.
 
 ---
 
-## 🧪 Test Input
+## Test Input
 
 Use any JSON file like:
 
@@ -68,7 +68,7 @@ Use any JSON file like:
 
 ---
 
-## 🛑 Troubleshooting
+## Troubleshooting
 
 * **Command not found**: Ensure `make` and `./main` are run from the correct directory.
 * **Flex or Bison errors**: Confirm installation with `flex --version` and `bison --version`.
